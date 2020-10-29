@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableRealStatePhotos extends Migration
+class CreateTableRealStateCategories extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateTableRealStatePhotos extends Migration
      */
     public function up()
     {
-        Schema::create('real_state_photos', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('create_table_real_state_categories', function (Blueprint $table) {
             $table->unsignedBigInteger('real_state_id');
-            $table->string('photo');
-            $table->boolean('s_thumb');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
-            $table->foreign('real_state_id')->references('id')->on('users');
+            $table->foreign('real_state_id')->references('id')->on('real_state');
+            $table->foreign('category_id')->references('id')->on('categories');
+            
         });
     }
 
@@ -30,6 +30,6 @@ class CreateTableRealStatePhotos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('real_state_photos');
+        Schema::dropIfExists('create_table_real_state_categories');
     }
 }
