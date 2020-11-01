@@ -13,7 +13,7 @@ class CreateTableRealStateCategories extends Migration
      */
     public function up()
     {
-        Schema::create('create_table_real_state_categories', function (Blueprint $table) {
+        Schema::create('real_state_categories', function (Blueprint $table) {
             $table->unsignedBigInteger('real_state_id');
             $table->unsignedBigInteger('category_id');
             $table->foreign('real_state_id')->references('id')->on('real_state');
@@ -28,6 +28,6 @@ class CreateTableRealStateCategories extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('create_table_real_state_categories');
+        Schema::dropIfExists('real_state_categories');
     }
 }

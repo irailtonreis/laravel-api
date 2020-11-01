@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Api\ApiMessages;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RealStateRequest;
 use App\Models\RealState;
@@ -29,7 +30,8 @@ class RealStateController extends Controller
                     'data'=> $realState
             ], 200);
         } catch (\Throwable $e) {
-            return response()->json(["error"=>$e->getMessage()]);
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
         }
     }
 
@@ -38,13 +40,19 @@ class RealStateController extends Controller
 
         try {
             $realState = $this->realState->create($data);
+
+            if(isset($data['categories']) && count($data['categories'])){
+                $realState->categories()->sync($data['categories']);
+            }
+            
             return response()->json([
                 'data'=>[
                     'msg'=>'Imóvel cadastrado com sucesso.'
                 ]
             ], 200);
         } catch (\Throwable $e) {
-            return response()->json(["error"=>$e->getMessage()]);
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
         }
 
     }
@@ -52,18 +60,24 @@ class RealStateController extends Controller
     public function update($id, RealStateRequest $request){
         $data = $request->all();
 
+        
         try {
             $realState = $this->realState->findOrFail($id);
 
             $realState->update($data);
 
+            if(isset($data['categories']) && count($data['categories'])){
+                $realState->categories()->sync($data['categories']);
+            }
+                
             return response()->json([
                 'data'=>[
                     'msg'=>'Imóvel atualizado com sucesso.'
                 ]
             ], 200);
         } catch (\Throwable $e) {
-            return response()->json(["error"=>$e->getMessage()]);
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
         }
 
     }
@@ -81,7 +95,8 @@ class RealStateController extends Controller
                 ]
             ], 200);
         } catch (\Throwable $e) {
-            return response()->json(["error"=>$e->getMessage()]);
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
         }
 
 
