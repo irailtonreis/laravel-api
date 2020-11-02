@@ -43,10 +43,17 @@ class UserController extends Controller
             return response()->json($message->getMessage(), 401);
 
         }
+        
 
         try {
             $data['password'] = bcrypt($data['password']);
             $user = $this->user->create($data);
+
+            $user->profile()->create([
+                'phone' => $data['phone'],
+                'mobile_phone' => $data['mobile_phone'],
+
+            ]);
             return response()->json([$user], 200);
         } catch (\Throwable $e) {
             $message = new ApiMessages($e->getMessage());
