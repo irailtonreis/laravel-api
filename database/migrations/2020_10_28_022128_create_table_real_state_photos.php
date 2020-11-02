@@ -17,9 +17,9 @@ class CreateTableRealStatePhotos extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('real_state_id');
             $table->string('photo');
-            $table->boolean('s_thumb');
+            $table->boolean('is_thumb');
             $table->timestamps();
-            $table->foreign('real_state_id')->references('id')->on('users');
+            $table->foreign('real_state_id')->references('id')->on('real_state');
         });
     }
 

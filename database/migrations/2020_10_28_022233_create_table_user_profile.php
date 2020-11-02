@@ -17,7 +17,7 @@ class CreateTableUserProfile extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->text('about')->nullable(true);
-            $table->text('social_networks');
+            $table->text('social_networks')->nullable(true);
             $table->string('phone');
             $table->string('mobile_phone');
             $table->timestamps();
