@@ -21,6 +21,11 @@ class LoginJwtController extends Controller
         return response()->json([
             'token'=> $token
         ]);
+    }
 
+    public function logout(){
+        Auth::logout();
+
+        return response()->json(['message'=> 'logout feito com sucesso.']);
     }
 }
