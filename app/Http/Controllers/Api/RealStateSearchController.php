@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RealState;
+use App\Repository\RealStateRepository;
 
 class RealStateSearchController extends Controller
 {
@@ -19,11 +20,19 @@ class RealStateSearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $realStates = $this->realState->paginate(10);
 
-        return response()->json($realStates, 200);
+        $repository = new RealStateRepository($this->realState);
+
+        $repository->selectCoditions($request->get('coditions'));
+    
+
+    if($request->has('fields')) {
+        $repository->selectFilter($request->get('fields'));
+    }
+
+        return response()->json($repository->getResult()->paginate(10), 200);
 
     }
     /**
