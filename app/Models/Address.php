@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
+    protected $table = 'adresses';
+
     public function state(){
         return $this->belongsTo(State::class);
     }
